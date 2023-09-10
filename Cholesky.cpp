@@ -14,7 +14,8 @@ void Cholesky_Decomposition(std::vector<std::vector<double>>& A, std::vector<std
     //omp_init_lock(&lock);
 
     // Decomposing a matrix into Lower Triangular
-#pragma omp parallel for num_threads(n)
+//#pragma omp parallel for num_threads(n)
+#pragma omp for schedule(guided)
     for (int i = 0; i < n; i++) 
     {
         //omp_set_lock(&lock);
@@ -45,7 +46,7 @@ void Cholesky_Decomposition(std::vector<std::vector<double>>& A, std::vector<std
     }
     //omp_destroy_lock(&lock);
 
-#pragma omp barrier
+//#pragma omp barrier
 }
 
 double Det(std::vector<std::vector<double>>& M, int n)
@@ -77,7 +78,7 @@ double Det(std::vector<std::vector<double>>& M, int n)
 //Multiplying matrix a and b and storing in array mult
 std::vector<std::vector<double>> Mult(std::vector<std::vector<double>>& A, std::vector<std::vector<double>>& B, int& n)
 {
-    std::vector<std::vector<double> > M(n, std::vector<double>(n, 0));
+    std::vector<std::vector<double>> M(n, std::vector<double>(n, 0));
 
     for (int i = 0; i < n; ++i)
     {
@@ -95,7 +96,7 @@ std::vector<std::vector<double>> Mult(std::vector<std::vector<double>>& A, std::
 
 std::vector<std::vector<double>> Minus(std::vector<std::vector<double>>& A, std::vector<std::vector<double>>& B, int& n)
 {
-    std::vector<std::vector<double> > M(n, std::vector<double>(n, 0));
+    std::vector<std::vector<double>> M(n, std::vector<double>(n, 0));
 
     for (int i = 0; i < n; i++)
     {
@@ -111,26 +112,25 @@ std::vector<std::vector<double>> Minus(std::vector<std::vector<double>>& A, std:
 
 int main()
 {
-    /*
-    std::vector<std::vector<double>> vec
+    int n = 3;
+    std::vector<std::vector<double>> Matrix
         {
-        {7, 1, 3},
-        {2, 4, 1},
-        {1, 5, 1} 
+        {1, -1, 2},
+        {-1, 5, -4},
+        {2, -4, 6} 
         };
-    std::cout << Det(vec, 3) << std::endl;
 
-    */
+    /*
     int n = 0;
     std::cout << "n : ";
     std::cin >> n;
 
     assert(n >= 3 && n < MATRIX_SIZE_MAX);
-
+    */
     std::vector<std::vector<double>> A(n, std::vector<double>(n, 0));
-    std::vector<std::vector<double> > L(n, std::vector<double>(n, 0));
-    std::vector<std::vector<double> > U(n, std::vector<double>(n, 0));
-    
+    std::vector<std::vector<double>> L(n, std::vector<double>(n, 0));
+    std::vector<std::vector<double>> U(n, std::vector<double>(n, 0));
+    /*
     double Aij;
     for (int i = 0; i < n; i++)
     {
@@ -156,8 +156,9 @@ int main()
     std::cout << std::endl;
 
     Cholesky_Decomposition(A, L, n);
+    */
 
-
+    Cholesky_Decomposition(Matrix, L, n);
     std::cout << "Displaying Lower Triangular" << std::endl;
     for (int i = 0; i < n; i++)
     {
@@ -184,12 +185,6 @@ int main()
     }
 
     std::cout << std::endl;
-
-    auto Mul = Mult(L, U, n);
-    auto Min = Minus(Mul, A, n);
-
-    double X = Det(Min, n) / Det(A, n);
-    std::cout << X;
     return 0;
 }
 
