@@ -112,6 +112,7 @@ std::vector<std::vector<double>> Minus(std::vector<std::vector<double>>& A, std:
 
 int main()
 {
+    /*
     int n = 3;
     std::vector<std::vector<double>> Matrix
         {
@@ -120,17 +121,17 @@ int main()
         {2, -4, 6} 
         };
 
-    /*
+    */
     int n = 0;
     std::cout << "n : ";
     std::cin >> n;
 
     assert(n >= 3 && n < MATRIX_SIZE_MAX);
-    */
+
     std::vector<std::vector<double>> A(n, std::vector<double>(n, 0));
     std::vector<std::vector<double>> L(n, std::vector<double>(n, 0));
     std::vector<std::vector<double>> U(n, std::vector<double>(n, 0));
-    /*
+    
     double Aij;
     for (int i = 0; i < n; i++)
     {
@@ -156,9 +157,9 @@ int main()
     std::cout << std::endl;
 
     Cholesky_Decomposition(A, L, n);
-    */
 
-    Cholesky_Decomposition(Matrix, L, n);
+
+    //Cholesky_Decomposition(Matrix, L, n);
     std::cout << "Displaying Lower Triangular" << std::endl;
     for (int i = 0; i < n; i++)
     {
