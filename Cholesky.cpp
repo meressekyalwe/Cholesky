@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <cassert>
-#include <algorithm>
+#include <cmath>
 #include <omp.h>
 
 #define MATRIX_SIZE_MAX 1000
@@ -26,10 +26,10 @@ void Cholesky_Decomposition(std::vector<std::vector<double>>& A, std::vector<std
             {
                 for (int k = 0; k < j; k++)
                 {
-                    sum += pow(L[j][k], 2);
+                    sum += std::pow(L[j][k], 2);
                 } 
 
-                L[j][j] = sqrt(A[j][j] - sum);
+                L[j][j] = std::sqrt(A[j][j] - sum);
             }
             else 
             {
@@ -69,7 +69,7 @@ double Det(std::vector<std::vector<double>>& M, int n)
                 }
                 subi++;
             }
-            det = det + (pow(-1, x) * M[0][x] * Det(submatrix, n - 1));
+            det = det + (std::pow(-1, x) * M[0][x] * Det(submatrix, n - 1));
         }
     }
     return det;
